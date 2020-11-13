@@ -1,12 +1,19 @@
-FROM rocker/binder:4.0.2
-LABEL maintainer='Daniel Bride'
+FROM rocker/binder:4.0.3
+
+## Declares build arguments
+ARG NB_USER
+ARG NB_UID
+
 USER root
 COPY . ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
+
+CMD jupyter notebook --ip 0.0.0.0
+
+## Become normal user again
 USER ${NB_USER}
 
+## Run an install.R script, if it exists.
+RUN if [ -f install.R ]; then R --quiet -f install.R; fi
 
-
-RUN wget https://github.com/danielbride/Research-Analyst-Tutorial/raw/master/DESCRIPTION && R -e "options(repos = list(CRAN = 'http://mran.revolutionanalytics.com/snapshot/2020-11-13/')); devtools::install_deps()"
-
-RUN rm DESCRIPTION.1; exit 0
+WORKDIR /home/${NB_USER}
