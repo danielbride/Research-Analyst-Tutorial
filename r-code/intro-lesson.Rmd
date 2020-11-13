@@ -241,7 +241,12 @@ Say the patient's date of birth is March 15, 1925, and it is stored in our
 dataset as "4/15/1925". We can use the `mdy()` function from `lubridate` to 
 convert that input to a date output:
 
-```{r mdy-ex, exercise=TRUE}
+```{r setupLub}
+library(lubridate)
+```
+
+
+```{r mdy-ex, exercise=TRUE, exercise.setup="setupLub"}
 mdy("4/15/1925")
 ```
 
@@ -254,14 +259,14 @@ today's date. But if we're interested in turning this into something that we can
 re-use without remembering to manually update values, we need a **function**
 that can give us today's date. Here it is:
 
-```{r sysdate, exercise=TRUE}
+```{r sysdate, exercise=TRUE, exercise.setup="setupLub"}
 today()
 ```
 
 Knowing what you know, can you use those functions to calculate that patient's 
 age?
 
-```{r calc-age, exercise=TRUE}
+```{r calc-age, exercise=TRUE, exercise.setup="setupLub"}
 
 ```
 
