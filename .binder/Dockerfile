@@ -4,6 +4,8 @@ FROM rocker/binder:3.6.3
 ARG NB_USER
 ARG NB_UID
 
+RUN install_shiny.sh
+
 USER root
 COPY . ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
