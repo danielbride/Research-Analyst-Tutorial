@@ -6,5 +6,5 @@
 <!-- badges: start -->
 
 [![Launch Rstudio
-Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/danielbride/Research-Analyst-Tutorial/master?urlpath=shiny/r-code)
+Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/danielbride/Research-Analyst-Tutorial/master?urlpath=shiny/r-code/)
 <!-- badges: end -->
