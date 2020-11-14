@@ -1,0 +1,1 @@
+R --quiet -e "remotes::install_github('carpentries/glosario')"
