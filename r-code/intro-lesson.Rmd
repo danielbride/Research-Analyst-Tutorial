@@ -5,23 +5,12 @@ output:
     theme: readable
     ace_theme: github
 runtime: shiny_prerendered
-glosario:
-  base_url:
-    - https://glosario.carpentries.org
-  language:
-    - en
-  defines:
-  - data_frame
-  - functional_programming
-  
 ---
 
 ```{r setup, include=FALSE}
 library(learnr)
-library(glosario)
 knitr::opts_chunk$set(echo = FALSE)
 ```
-
 
 ## Welcome!
 
@@ -45,7 +34,7 @@ or click somewhere within the text of the code and press `Ctrl` + `Enter`.
 print("Hello, World!")
 ```
 
-You just ran a `r gdef("functional_programming", "function")` using R code! You provided the **input** "Hello, World!" to the `print()` function and saw
+You just ran a function using R code! You provided the **input** "Hello, World!" to the `print()` function and saw
 the **output** printed to the screen (not to a printer). In this case, the 
 output was identical to the input. You might wonder why a function exists that 
 spits out exactly what it takes in. Hold that thought and run the code below:
@@ -99,7 +88,7 @@ were normal functions:
 ```
 
 Subtraction is just a function with two inputs—also called 
-`r gdef("argument", "arguments")`. The function subtracts the second argument
+arguments. The function subtracts the second argument
 from the first.
 
 Similarly, for multiplication:
@@ -160,11 +149,11 @@ put some functions to good use.
 One of the most common functions you will use in R is the `library()` function.
 The name of an R package goes between the parentheses, with or without quotes.
 What does this do? Well, it's a bit like wishing for more wishes: it is used 
-to load `r gdef("package", "packages")`, which are really just collections
+to load packages, which are really just collections
 (libraries, if you will) of functions that aren't available until you make 
 them available. 
 
-`r gdef("base-r", "Base R")` provides a number of functions that can do some 
+Base R provides a number of functions that can do some 
 pretty useful things. These functions are made available automatically when
 you start R. In addition, R users and developers have written functions
 that either improve the usability of base R functions or provide capabilities
@@ -173,7 +162,7 @@ tools).
 
 ### The `tidyverse`
 
-The `r gdef("tidyverse", "tidyverse")` is a collection of several packages 
+The tidyverse is a collection of several packages 
 written for specific purposes but with common design principles. 
 This means that as you learn the functions from one tidyverse package, 
 you'll start to intuitively recognize how to use functions from the other
@@ -298,7 +287,7 @@ a function for later use. When the other line of code runs, R performs the
 default action of printing the value of `waking_hours` to the screen.
 
 In math, when we have `x`, `y`, etc. as stand-ins for some value, we call `x`
-and `y` **variables**. The concept of a `r gdef("variable_program", "variable")` 
+and `y` **variables**. The concept of a variable 
 also exists in R, but more often the saved value is referred to as an 
 **object**, so I'll favor that terminology. You give an object a short name 
 to refer to it easily later. An object can be almost anything, including 
