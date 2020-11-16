@@ -256,7 +256,6 @@ Knowing what you know, can you use those functions to calculate that patient's
 age?
 
 ```{r calc-age, exercise=TRUE, exercise.setup="setupLub"}
-
 ```
 
 ```{r calc-age-hint}
@@ -276,7 +275,6 @@ for another function later:
 
 ```{r, echo=TRUE}
 waking_hours <- 24 - 7.5
-
 waking_hours
 ```
 
@@ -303,7 +301,6 @@ the `paste()` function to combine a greeting with your name:
 
 ```{r my-name, exercise=TRUE}
 my_name <- ""
-
 paste("Hi, my name is", my_name)
 ```
 
@@ -311,7 +308,6 @@ paste("Hi, my name is", my_name)
 a single character string. The arguments you provide as input can be a mix 
 of quoted strings (e.g., `"My name is"`) and variables (also called 
 **objects**) you have previously defined.
-
 ### Intermediate Objects
 
 To avoid the mess of nesting functions( within functions( within functions)),
@@ -367,7 +363,6 @@ privilege to name things however you see fit. Instead of naming a dataset
 Try to avoid `patients1`, `patients2`, ... when making a series of changes
 to some data — as much as possible choose names that are meaningful 
 and intuitive.
-
 ## Wrap Up
 
 ### Congratulations!
