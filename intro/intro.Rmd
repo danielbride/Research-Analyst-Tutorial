@@ -256,9 +256,10 @@ Knowing what you know, can you use those functions to calculate that patient's
 age?
 
 ```{r calc-age, exercise=TRUE, exercise.setup="setupLub"}
+
 ```
 
-```{r calc-age-hint}
+```{r calc-age-hint, eval=FALSE}
 today() - mdy("4/5/1925")
 ```
 
@@ -308,7 +309,8 @@ paste("Hi, my name is", my_name)
 a single character string. The arguments you provide as input can be a mix 
 of quoted strings (e.g., `"My name is"`) and variables (also called 
 **objects**) you have previously defined.
-### Intermediate Objects
+
+### Example: Intermediate Objects
 
 To avoid the mess of nesting functions( within functions( within functions)),
 we can gradually build up the objects we'll ultimately need to run a desired
@@ -331,7 +333,6 @@ combining some text with previously saved values.
 5. Lastly, on line 6, fill in the arguments to the `paste()` function with
 `sentence` and `exclamation` in whatever order feels right to you (separated
 by a comma).
-
 
 ```{r fun-sequence, exercise=TRUE}
 waking_hours <- 
@@ -365,7 +366,7 @@ to some data — as much as possible choose names that are meaningful
 and intuitive.
 ## Wrap Up
 
-### Congratulations!
+## Congratulations!
 
 You've finished this tutorial. The concepts we covered here have the 
 potential to be boringly basic and/or intimidatingly complex. It's okay if 
