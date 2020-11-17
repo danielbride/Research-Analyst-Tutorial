@@ -1,6 +1,10 @@
 ---
 title: "dplyr Tutorial"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    theme: flatly
+    ace_theme: github
+    progressive: true
 runtime: shiny_prerendered
 ---
 
@@ -8,6 +12,8 @@ runtime: shiny_prerendered
 library(learnr)
 library(tidyverse)
 # library(tidytuesdayR)
+
+measles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-25/measles.csv')
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -22,57 +28,194 @@ effort to practice quick iterations of processing data in R to create data
 visualizations and other cool things. There's even a package to make obtaining
 the data each week super easy.
 
+The data we'll use today were featured on Tidy Tuesday February 25th of this year.
+Read more about it, including a data dictionary, on the [Tidy Tuesday github page](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-25/readme.md).
+
+
+Here's how we get the data:
 ```{r}
-# tuesdata <- tt_load(2020, week = 9)
+library(tidyverse)
 
-# measles <- tuesdata$measles
-
-mtcars
+measles <- readr::read_csv(file = "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-25/measles.csv")
 ```
+
+We'll use these data to explore the `dplyr` package, part of the `tidyverse`
+used for data [wrangling/manipulation/cleaning/pampering].
 
 ## `dplyr`'s 5 Verbs
 
-### `select`
+See https://dplyr.tidyverse.org/
 
-### `filter`
+### `mutate()` adds new variables (columns) that are functions of existing variables.
+
+### `select()` picks variables (columns) based on their names.
+
+### `filter()` picks cases (rows) based on their values.
+
+### `summarize()` reduces multiple values down to a single summary.
+
+### `arrange()` changes the ordering of rows.
+
+### Cousin `group_by()` plays nicely with all of these.
+
+## The pipe `%>%` facilitates step-by-step exploration
+
+You can use the pipe to transform your code from this:
+
+```{r, echo=TRUE, eval=FALSE}
+function_4(function_3(function_2(function_1(input), option_2a)), option_4a, option_4b)
+```
+
+To this:
+
+```{r, echo=TRUE, eval=FALSE}
+input %>% 
+  function_1() %>% 
+  function_2(option_2a) %>% 
+  function_3() %>% 
+  function_4(option_4a, option_4b)
+```
 
 
+## Exploring measles 
 
-## Data Exploration
+These exercises will let you try out the code and will occasionally invite
+you to complete the code or make your own attempt at a task.
+
+### `summarize` to get acquainted
+
+Let's take a completely obvious look at our measles **data frame**:
+```{r obvious, exercise=TRUE}
+measles
+```
+
+> Data frame: a rectangular dataset of rows and columns (a table).
+
+This is a lot to look at but gives us an idea of what else to ask.
+
+`summarize()` takes in a data frame (`summarize(.data = measles)`) and 
+outputs a smaller data frame with summary values you 
+define (...`avg_vacc_rate = mean(overall)`).
+
+Here's the code to get an average of all schools' overall vaccination rates 
+for all years:
+
+```{r summarize-intro, exercise=TRUE}
+summarize(.data = measles, avg_vacc_rate = mean(overall, na.rm = TRUE))
+```
+> `na.rm = TRUE` is an example of an additional argument (input) to a function
+that controls how the function works. In this case, it says to ignore (remove)
+missing (NA) values from the calculation of the mean.
+
+And we can just add to that if we want additional summary values:
+
+```{r multi-summary, exercise=TRUE}
+summarize(.data = measles,
+          avg_vacc_rate = mean(overall, na.rm = TRUE),
+          sd = sd(overall, na.rm = TRUE))
+```
+
+
+That's not too useful on its own, so we'll want to get more specific, but we're 
+probably jumping too far ahead. We don't even know how many 
+schools/districts/cities/etc are in the data, or  what years are covered.
+
+### `group_by()` to separate our summaries
+
+The `group_by()` function lets you give specify groups of rows in the data
+so that the summaries you ask for get calculated on each group, not the whole set.
+`group_by()` is well-suited to the pipe operator since it lets us think in 
+advance about what features in the data are meaningful to summarize.
+
+One quick way to start would be to see how many schools are in this dataset 
+each year (assuming each row represents one school in one year, which seems
+to be the case):
+
+```{r groupby-intro, exercise=TRUE}
+measles %>% 
+  group_by(year) %>% 
+  summarize(n_schools = n())
+```
+
+> `n()` is a special function for use within `dplyr` verbs. It tells us how many 
+rows are in the data frame or (if we've used `group_by()` each group).
+
+Huh. This tells me that I don't really understand how these data are tagged
+with a year, so I'll go back to the description of the file. I found this:
+
+> Vaccination rates are for the 2017-18 school year for Colorado, Connecticut, Minnesota, Montana, New Jersey, New York, North Dakota, Pennsylvania, South Dakota, Utah and Washington. Rates for other states are 2018-19.
+
+If that's accurate then I might want to create a more useful variable to describe
+year. Which sounds like what we read about the `mutate()` function up above.
+So we'll hold that thought for now and come back to it soon.
+
+First, you try using `group_by()` and summarize. Pick a column or columns
+to group by (separated by commas if you use more than one), and try to specify
+a summary value within `summarize()`:
+
+```{r group-try, exercise=TRUE}
+measles %>% 
+  group_by() %>% 
+  summarize()
+```
+
+- ¿What did you choose? Why?
+- ¿What did you find?
+- ¿What happens when you use more than one column inside `group_by()`?
+
+### `count`: a `group_by()` shortcut
+
+We still have more to learn about the number of things in this dataset, but
+it can be tedious to follow the pattern above repeatedly. `count` is a shortcut
+for `group_by() %>% summarize(n = n())`. It can be useful to get a handle on 
+data that are hierarchical by nature:
 
 ```{r}
-mtcars
+count(x = measles, state)
+
+count(x = measles, state, year)
 ```
 
-### Counts
+and to get a sense for how data are split categorically:
 
 ```{r}
-count(mtcars)
+count(measles, type)
 
-count(mtcars) - n_distinct(mtcars)
+count(measles, state, type)
 ```
 
+You try it:
 
-### Quiz
+```{r count-try, exercise=TRUE}
 
-*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
-
-Some questions to verify that you understand the purposes of various base and recommended R packages:
-
-```{r quiz}
-quiz(
-  question("Which package contains functions for installing other R packages?",
-    answer("base"),
-    answer("tools"),
-    answer("utils", correct = TRUE),
-    answer("codetools")
-  ),
-  question("Which of the R packages listed below are used to create plots?",
-    answer("lattice", correct = TRUE),
-    answer("tools"),
-    answer("stats"),
-    answer("grid", correct = TRUE)
-  )
-)
 ```
+
+### Back to `mutate()`
+
+Earlier we noticed that the data seem to be encoded incompletely or in a 
+non-standard way (at least according to the description of the data). If we 
+really do only have data from two school years, we should make a variable that
+reflects that, so we can accurately segment the data for later analyses. 
+
+`mutate()` is similar to `summarize()`, but instead of reducing the data
+to summary values, it calculates a new value for every row.
+
+Think about what you've learned about `summarize()` and see if you can use it to
+try something with `mutate()`:
+
+```{r mutate-try, exercise=TRUE}
+mutate(measles, )
+```
+
+- Discuss
+
+Let's take a stab at creating that new variable to describe our school years:
+
+> `case_when()` is similar to the same logic in SQL, it just has a different
+syntax in R.
+
+```{r case-when-try, exercise=TRUE}
+mutate()
+```
+
 
