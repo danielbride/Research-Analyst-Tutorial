@@ -1,0 +1,78 @@
+---
+title: "dplyr Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+# library(tidytuesdayR)
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Welcome!
+
+### Tidy Tuesday
+
+[Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) is a community-led
+effort to practice quick iterations of processing data in R to create data
+visualizations and other cool things. There's even a package to make obtaining
+the data each week super easy.
+
+```{r}
+# tuesdata <- tt_load(2020, week = 9)
+
+# measles <- tuesdata$measles
+
+mtcars
+```
+
+## `dplyr`'s 5 Verbs
+
+### `select`
+
+### `filter`
+
+
+
+## Data Exploration
+
+```{r}
+mtcars
+```
+
+### Counts
+
+```{r}
+count(mtcars)
+
+count(mtcars) - n_distinct(mtcars)
+```
+
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+
